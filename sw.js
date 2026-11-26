@@ -11,7 +11,7 @@
  */
 'use strict';
 
-const CACHE_VERSION = '4d109a4090';
+const CACHE_VERSION = '8797b95196';
 const CACHE_PREFIX = 'daribaevtar-';
 const CACHE = CACHE_PREFIX + CACHE_VERSION;
 const PAGE = './';

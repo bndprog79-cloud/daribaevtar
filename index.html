@@ -15,7 +15,7 @@
 <meta property="og:description" content="Домбыра · Хореография · Вокал · Сурет · English · Зумба — Алматы, «Үшқоңыр» ТК · Кружки и цены">
 <meta property="og:url" content="https://bndprog79-cloud.github.io/daribaevtar/">
 <meta property="og:locale" content="kk_KZ">
-<meta property="og:image" content="https://bndprog79-cloud.github.io/daribaevtar/og-image.jpg?v=0a1427aa63">
+<meta property="og:image" content="https://bndprog79-cloud.github.io/daribaevtar/og-image.jpg?v=7a6cada178">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Дәрібаевтар өнер-білім мектебі — үйірмелер мен бағалар">
 <meta name="twitter:description" content="Домбыра · Хореография · Вокал · Сурет · English · Зумба — Алматы, «Үшқоңыр» ТК · Кружки и цены">
-<meta name="twitter:image" content="https://bndprog79-cloud.github.io/daribaevtar/og-image.jpg?v=0a1427aa63">
+<meta name="twitter:image" content="https://bndprog79-cloud.github.io/daribaevtar/og-image.jpg?v=7a6cada178">
 <!--OG:END-->
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>
@@ -1097,6 +1097,30 @@
   .kpicbox.has-photo.kico-first { --kp-ratio: 200 / 140; }
   .kslide .kph.kico { object-fit: contain; }
 
+/* ── Иконка целиком в плитке направления и «Танымал» (settings.iconsWhole: true, 26.11.2026, первое — daribaevtar) ──
+     Вставляет сборка (tools/build.js, место KIDS_ICONS_WHOLE_CSS) только с этой настройкой; иначе стилей нет.
+     Иконка (кадр 200:140, предмет по центру белого поля --ki-bg) не обрезается (contain). Затемнение — не во всю плитку, а только
+     под подписью: цвет --accent-strong (тёмный фирменный), сверху плавно в прозрачное (задание 05). Плитка направления — иконка над
+     подписью; «Танымал» — иконка сверху в кадре 200:140, ниже подпись на тёмном. Шапка страницы направления — иконка направления
+     (.kib-ico, engine/kids/icons-whole.js). Рисунок движка под картинкой скрыт; не загрузилась — has-photo снимается, рисунок виден. */
+  :root { --ki-bg: #FFFFFF; }
+  .kdirs .cat-card.has-photo .kdph, .kclub.has-photo .ill { background: var(--ki-bg); }
+  .kdirs .cat-card.has-photo .kdph::after, .kclub.has-photo .ill::after { display: none; }
+  .kdph > .kph.kico, .kclub.has-photo .ill > .kph.kico { object-fit: contain; object-position: 50% 50%; }
+  /* плитка направления: иконка — над подписью, подпись — на тёмной полосе */
+  .kdph > .kph.kico { height: calc(100% - 56px); }
+  .kdirs .cat-card.has-photo .body { flex: 1; align-self: flex-end; padding-top: 22px;
+    background: linear-gradient(to bottom, transparent 0, var(--accent-strong) 16px); }
+  /* «Танымал»: иконка — в кадре 200:140 сверху (не поверх подписи), ниже — подпись на тёмном */
+  .kclub.has-photo .ill { position: relative; height: auto; aspect-ratio: 200 / 140; }
+  .kclub.has-photo .ill > :not(.kph) { visibility: hidden; }
+  .kclub.has-photo .kt { flex: 1; margin-top: -16px; padding-top: 24px;
+    background: linear-gradient(to bottom, transparent 0, var(--accent-strong) 16px); }
+  /* шапка страницы направления: иконка направления вместо значка */
+  .kdirhead .kib.kib-ico { width: 64px; height: 64px; overflow: hidden; background: var(--ki-bg); }
+  .kib.kib-ico > svg { display: none; }
+  .kib.kib-ico > .kph { width: 100%; height: 100%; object-fit: cover; display: block; }
+
 /* ── кнопка «Назад» внизу (engine/kids/back.css — только с settings.backButton: true) ──
      Круг 52 px: изумруд шапки, тонкий золотой ободок, стрелка шампанью (--hero-slogan, контраст AA на --hero-bg).
      Без панели — плавает внизу слева по краю колонки (448 px), экрану — отступ снизу, чтобы последнюю карточку можно было
@@ -1118,12 +1142,17 @@
     .kback:active { transform: none; }
   }
 
-/* ── Шапка «Мазки» (settings.heroStyle: "brush", 25.11.2026, первое — daribaevtar; место KIDS_BRUSH_CSS, без настройки — пусто) ──
-     Светлая шапка цвета --surface, текст и кнопки — главный цвет --accent-strong; вместо звёзд — мазки кисти по углам (SVG из
-     engine/kids/brush.js: --accent-strong, --gold, --kb-sky). Название — --on-accent на синем мазке, слоган — на жёлтом мазке --gold;
-     цены в списках, «Танымал» и карточке — на жёлтом мазке (как в прайсе центра; «уточняется» — без мазка, класс kb-ask).
-     Мазки названия, слогана и цены — CSS-маски (контур в SVG, #000 — только непрозрачность маски, цвет — фон var(...)).
-     --kb-sky — третий цвет brand.accent3 (сборка), без него — --accent-strong. Золотая рамка (headerFrame) с мазками не сочетается. */
+/* ── Шапка «Мазки» (settings.heroStyle: "brush", 25.11.2026, первое — daribaevtar; задание 03 — 26.11.2026; место KIDS_BRUSH_CSS,
+     без настройки — пусто) ──
+     Светлая шапка цвета --surface, текст и кнопки — главный цвет --accent-strong. Мазок — только под текстом: название — --on-accent
+     на синем мазке, слоган — на жёлтом мазке --gold; цены в списках, «Танымал» и карточке — на жёлтом мазке (как в прайсе центра;
+     «уточняется» — без мазка, класс kb-ask). Мазки — CSS-маски (контур в SVG, #000 — только непрозрачность маски, цвет — фон var(...)).
+     Эмблема (.mono) — кольцо --accent-strong (2 px на 64 px логотипа) и лёгкая тень --shadow: белый край круга не сливается с фоном;
+     так же в экране «без JavaScript» (.nos) и на печатной карточке (.card6, tools/qr — стиль сайта входит в страницу карточки).
+     По правому краю — полоса-рамка орнамента «қошқар мүйіз» (.kb-orn, ставит brush.js): маска из линий (контур —
+     clients/daribaevtar/source/dizajn/ornament.js), цвет --kb-sky (brand.accent3, без него — --accent-strong), прозрачность .25;
+     ширина 28 px, на ПК (от 768 px) — 48 px; лежит под содержимым шапки (KZ/RU, кнопки — с фоном, читаются).
+     Золотая рамка (headerFrame) с мазками не сочетается. */
   :root { --kb-sky: var(--accent-strong); }
   .khero.kbrush {
     --hero-bg: var(--surface); --hero-text: var(--accent-strong); --hero-text-2: var(--accent-strong);
@@ -1131,10 +1160,16 @@
     --hero-slogan: var(--accent-strong); --status-bg: var(--bg); --status-text: var(--accent-strong);
     box-shadow: var(--shadow);
   }
-  .khero.kbrush > .kbrush-l, .khero.kbrush > .kbrush-r { position: absolute; top: 0; z-index: 0; pointer-events: none; height: auto; }
-  .khero.kbrush > .kbrush-l { left: 0; width: 150px; }
-  .khero.kbrush > .kbrush-r { right: 0; width: 170px; }
-  .kbrush .kb-n { fill: var(--accent-strong); } .kbrush .kb-y { fill: var(--gold); } .kbrush .kb-s { fill: var(--kb-sky); }
+  .khero.kbrush > .kb-orn {
+    position: absolute; top: 0; right: 0; bottom: 0; z-index: 0; width: 28px; pointer-events: none; background: var(--kb-sky); opacity: .25;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 48%27%3E%3Cpath d=%27M2 0V48M30 0V48M16 26C16 17 11 11 7.5 13.5C4 16 5.5 21.5 9.5 21C12.5 20.6 12.6 16.8 9.8 16.8M16 26C16 17 21 11 24.5 13.5C28 16 26.5 21.5 22.5 21C19.5 20.6 19.4 16.8 22.2 16.8M16 26V36M16 36C16 40 12 42.5 9.6 41C8 40 8.6 37.6 10.6 38M16 36C16 40 20 42.5 22.4 41C24 40 23.4 37.6 21.4 38M16 42L19 45L16 48L13 45ZM16 0V4%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%271.6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") repeat-y center top / 100% auto;
+    mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 48%27%3E%3Cpath d=%27M2 0V48M30 0V48M16 26C16 17 11 11 7.5 13.5C4 16 5.5 21.5 9.5 21C12.5 20.6 12.6 16.8 9.8 16.8M16 26C16 17 21 11 24.5 13.5C28 16 26.5 21.5 22.5 21C19.5 20.6 19.4 16.8 22.2 16.8M16 26V36M16 36C16 40 12 42.5 9.6 41C8 40 8.6 37.6 10.6 38M16 36C16 40 20 42.5 22.4 41C24 40 23.4 37.6 21.4 38M16 42L19 45L16 48L13 45ZM16 0V4%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%271.6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") repeat-y center top / 100% auto;
+  }
+  /* на ПК — вплотную снаружи правого края колонки содержимого (шапка во всю ширину окна, колонка — по --kpad; кнопки и KZ/RU
+     не перекрывает), на телефоне — у края окна */
+  @media (min-width: 768px) { .khero.kbrush > .kb-orn { width: 48px; right: calc(var(--kpad) - 64px); } }
+  .kbrush .mono, .nos .mono { border-radius: 50%; box-shadow: 0 0 0 2.4px var(--accent-strong), var(--shadow); }
+  .card6 .mono { border-radius: 50%; box-shadow: 0 0 0 .47mm var(--accent-strong), var(--shadow); }
   .kbrush .kbrand { padding-right: 0; min-height: 76px; }
   .kbrush .mono { width: 76px; height: 76px; }
   .kbrush .kbrand > div { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
@@ -4412,7 +4447,7 @@ renderItem = function (screen, cat, item, app) {
 // Подменяет: clubArt (строки, «Танымал», программа), renderItem (листание в карточке), renderKidsHome (плитки направлений,
 // альбом после «Танымал»), parseRoute и renderHome (экран #/photos — все фото). Просмотр на весь экран — окно поверх #app,
 // запись в истории (как окно QR): системная «Назад» его закрывает.
-const KIDS_PHOTOS = {"f":[["suret-1","55 45"],["prodlenka-1","50 50"],["dombyra","50 50"],["horeografiya","50 50"],["vokal","50 50"],["suret","50 50"],["akterlik","50 50"],["tigin","50 50"],["mektepaldy","50 50"],["prodlenka","50 50"],["english","50 50"],["zumba","50 50"],["oner","50 50"],["bilim","50 50"]],"c":{"oner/suret":[0,5],"bilim/prodlenka":[1,9],"oner/dombyra":[2],"oner/horeografiya":[3],"oner/vokal":[4],"oner/akterlik":[6],"oner/tigin":[7],"bilim/mektepaldy":[8],"bilim/english":[10],"eresek/zumba":[11]},"d":{"oner":12,"bilim":13,"eresek":11},"i":[2,3,4,5,6,7,8,9,10,11,12,13]};
+const KIDS_PHOTOS = {"f":[["suret-1","55 45"],["prodlenka-1","50 50"],["s-dombyra","50 50"],["s-horeografiya","50 50"],["s-vokal","50 50"],["s-suret","50 50"],["s-akterlik","50 50"],["s-tigin","50 50"],["s-mektepaldy","50 50"],["s-prodlenka","50 50"],["s-english","50 50"],["s-zumba","50 50"],["s-oner","50 50"],["s-bilim","50 50"],["s-eresek","50 50"]],"c":{"oner/suret":[0,5],"bilim/prodlenka":[1,9],"oner/dombyra":[2],"oner/horeografiya":[3],"oner/vokal":[4],"oner/akterlik":[6],"oner/tigin":[7],"bilim/mektepaldy":[8],"bilim/english":[10],"eresek/zumba":[11]},"d":{"oner":12,"bilim":13,"eresek":14},"i":[2,3,4,5,6,7,8,9,10,11,12,13,14]};
 const ALBUM_PREVIEW = 5;
 
 function kpSrc(i, suffix) { return 'photos/' + encodeURIComponent(KIDS_PHOTOS.f[i][0] + suffix) + '.webp'; }
@@ -4801,6 +4836,26 @@ renderItem = function (screen, cat, item, app) {
   if (pic && list.length && kpIsIcon(list[0])) pic.classList.add('kico-first');
 };
 
+// ─────────── Иконки — первыми (settings.iconsWhole: true, задание 05 daribaevtar, 26.11.2026) ───────────
+// Вставляет сборка (tools/build.js, место KIDS_ICONS_WHOLE после иконок) только с этой настройкой; иначе кода нет.
+// У кружка с фото и иконкой иконка — первая: в списках, «Танымал» и миниатюрах — иконка, фото — в карточке вторым кадром
+// и в альбоме «Біздің орталық» (как раньше). В шапке страницы направления — иконка направления (плитка с главной), а не значок движка.
+const clubPhotosIconsLast = clubPhotos;
+clubPhotos = function (cat, item) {
+  const list = clubPhotosIconsLast(cat, item);
+  return list.filter(kpIsIcon).concat(list.filter(function (i) { return !kpIsIcon(i); }));
+};
+const renderCategoryIconAfter = renderCategory;
+renderCategory = function (screen, cat) {
+  renderCategoryIconAfter(screen, cat);
+  const i = KIDS_PHOTOS.d[cat.id];
+  const ib = screen.querySelector('.kdirhead .kib');
+  if (i === undefined || !kpIsIcon(i) || !ib) return;
+  const img = kpImg(i, '-m', function () { ib.classList.remove('kib-ico'); if (img.parentNode) img.parentNode.removeChild(img); });
+  ib.classList.add('kib-ico');
+  ib.appendChild(img);
+};
+
 // ─────────── Кнопка «Назад» внизу (settings.backButton: true) ───────────
 // Вставляет сборка (tools/build.js, место KIDS_BACK в конце kids.js) только детскому центру с backButton; без настройки кода нет.
 // Экраны направления, «Ересектерге», кружка, «Все фото» и программы (на главной кнопки нет). Круг слева:
@@ -4855,45 +4910,15 @@ render = function (route, direction) {
     kbackWatch = function () { window.removeEventListener('scroll', onScroll); };
   }
 };
+const KB_SUB_LANG = "kk"; // подпись в шапке всегда на этом языке (settings.heroSubLang)
 
-// ─────────── Шапка «Мазки» (settings.heroStyle: "brush", 25.11.2026, первое — daribaevtar) ───────────
+// ─────────── Шапка «Мазки» (settings.heroStyle: "brush", 25.11.2026, первое — daribaevtar; задание 03 — 26.11.2026) ───────────
 // Вставляет сборка (tools/build.js, место KIDS_BRUSH) только у детского центра с heroStyle: "brush"; иначе кода нет.
-// Светлая шапка (engine/kids/brush.css): вместо звёзд — мазки кисти в верхних углах (SVG, цвета — классы kb-n, kb-y, kb-s
-// → var(--accent-strong), var(--gold), var(--kb-sky)); название — на синем мазке, слоган — на жёлтом (CSS-маски).
+// Светлая шапка (engine/kids/brush.css): мазок — только под текстом (название — на синем, слоган — на жёлтом, CSS-маски);
+// эмблема — с кольцом цвета --accent-strong; по правому краю — полоса орнамента «қошқар мүйіз» (.kb-orn, CSS-маска, приглушённо).
+// KB_SUB_LANG (сборка, settings.heroSubLang) — подпись в шапке всегда на этом языке (название и подпись — как в логотипе),
+// в остальных местах — как обычно. Подпись, как и название, — без автоперевода (notranslate, translate="no").
 // Цена «уточняется» (ui.priceAsk) в списках и «Танымал» получает класс kb-ask — без жёлтого мазка.
-// Мазок — полоса вдоль изогнутой линии с неровными краями и «щетиной» на концах; seed — один и тот же рисунок.
-function kbStroke(ax, ay, bx, by, w, bend, seed) {
-  let s = seed >>> 0;
-  const r = function () { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  const dx = bx - ax, dy = by - ay, L = Math.sqrt(dx * dx + dy * dy), ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
-  const N = 26, top = [], bot = [];
-  for (let i = 0; i <= N; i++) {
-    const k = i / N, b = bend * Math.sin(Math.PI * k);
-    const cx = ax + dx * k + nx * b, cy = ay + dy * k + ny * b;
-    const h = w / 2 * (k < 0.1 ? 0.62 + 3.8 * k : k > 0.88 ? 0.5 + 0.5 * (1 - k) / 0.12 : 1);
-    top.push([cx + nx * h * (1 + (r() - 0.5) * 0.1), cy + ny * h * (1 + (r() - 0.5) * 0.1)]);
-    bot.push([cx - nx * h * (1 + (r() - 0.5) * 0.1), cy - ny * h * (1 + (r() - 0.5) * 0.1)]);
-  }
-  const comb = function (p, q, dir, len) {
-    const out = [];
-    for (let j = 1; j < 6; j++) {
-      const f = j / 6, d = (j % 2 ? 1 : 0.25) * len * (0.4 + r() * 0.8);
-      out.push([p[0] + (q[0] - p[0]) * f + ux * dir * d, p[1] + (q[1] - p[1]) * f + uy * dir * d]);
-    }
-    return out;
-  };
-  const pts = top.concat(comb(top[N], bot[N], 1, w * 0.3), bot.slice().reverse(), comb(bot[0], top[0], -1, w * 0.2));
-  return 'M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('L') + 'Z';
-}
-function kbSvg(cls, vb, strokes) {
-  return '<svg class="' + cls + '" viewBox="' + vb + '" aria-hidden="true" focusable="false">' + strokes.map(function (x) {
-    return '<path class="kb-' + x[0] + '" d="' + kbStroke(x[1], x[2], x[3], x[4], x[5], x[6], x[7]) + '"/>';
-  }).join('') + '</svg>';
-}
-// слева — за логотипом (виден вокруг круга), справа — под KZ/RU и правее названия
-const KB_LEFT = kbSvg('kbrush-l', '0 0 150 120', [['y', -20, 70, 124, -14, 30, 4, 41], ['n', -16, 104, 84, 38, 16, 3, 42], ['s', -10, 124, 50, 92, 8, 2, 43]]);
-const KB_RIGHT = kbSvg('kbrush-r', '0 0 170 130', [['s', 112, 60, 186, 42, 10, -2, 44], ['n', 70, 124, 186, 80, 20, -4, 45], ['y', 112, 132, 186, 104, 13, -3, 46]]);
-
 const renderKidsHomeNoBrush = renderKidsHome;
 renderKidsHome = function (screen) {
   renderKidsHomeNoBrush(screen);
@@ -4902,8 +4927,19 @@ renderKidsHome = function (screen) {
   hero.classList.add('kbrush');
   const sky = hero.querySelector('.ksky');
   if (sky) sky.parentNode.removeChild(sky);
-  hero.insertBefore(svgNode(KB_RIGHT), hero.firstChild);
-  hero.insertBefore(svgNode(KB_LEFT), hero.firstChild);
+  const orn = el('span', 'kb-orn');
+  orn.setAttribute('aria-hidden', 'true');
+  hero.insertBefore(orn, hero.firstChild);
+  const sub = hero.querySelector('.ksub');
+  if (sub) {
+    const fixed = KB_SUB_LANG && company.subtitle && company.subtitle[KB_SUB_LANG];
+    if (fixed) {
+      sub.textContent = fixed;
+      sub.setAttribute('lang', KB_SUB_LANG);
+    }
+    sub.classList.add('notranslate');
+    sub.setAttribute('translate', 'no');
+  }
 };
 // «уточняется» вместо цены — без жёлтого мазка (после каждой перерисовки экрана)
 const renderNoBrush = render;
