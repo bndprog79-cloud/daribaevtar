@@ -11,7 +11,7 @@
  */
 'use strict';
 
-const CACHE_VERSION = '8797b95196';
+const CACHE_VERSION = 'a79dc1285c';
 const CACHE_PREFIX = 'daribaevtar-';
 const CACHE = CACHE_PREFIX + CACHE_VERSION;
 const PAGE = './';
@@ -121,7 +121,10 @@ function assetResponse(req) {
 // категорий): загружаются при установке, по одному — сломанный файл не мешает остальным. Фото блюд не загружаются заранее:
 // «сначала кэш, потом сеть», удачный ответ сохраняется в тот же кэш (CACHE). Без сети и без копии — пустой ответ:
 // картинка не загрузится, на сайте останется рисунок (без сетевой ошибки в консоли).
-const PHOTO_PRECACHE = [];
+const PHOTO_PRECACHE = [
+  './photos/hero-bg.webp',
+  './photos/hero-bg-m.webp'
+];
 const photosUrl = new URL('./photos/', self.location).href;
 
 function precachePhotos() {
